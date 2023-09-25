@@ -30,8 +30,8 @@ function drawAndMoveCircle(){
   if(circleSize <= 150){
     circleSize = circleSize += 1;
   }
-  else(circleSize = 10);
-}
+  else{circleSize = 10;
+  }
 
 function scrollColour(){
   // changes the colour of the shapes using the scroll wheel
@@ -58,6 +58,6 @@ function mouseShape(){
     overlay.fill(colorArray[colorIndex]);
     overlay.stroke(colorArray[colorIndex]);
     overlay.rect(mouseX,mouseY,30,20);
-    }
-  image(overlay,0,0);
   }
+  image(overlay,0,0);
+}
