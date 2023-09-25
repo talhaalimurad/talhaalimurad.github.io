@@ -30,8 +30,10 @@ function drawAndMoveCircle(){
   if(circleSize <= 150){
     circleSize = circleSize += 1;
   }
-  else{circleSize = 10;
+  else{
+    circleSize = 10;
   }
+}
 
 function scrollColour(){
   // changes the colour of the shapes using the scroll wheel
@@ -39,7 +41,7 @@ function scrollColour(){
   if(event.delta < 0){
     colorIndex += 1;
     if(colorIndex > colorArray.length-1){
-      colorIndex = 0
+      colorIndex = 0;
     }
   }
 }
