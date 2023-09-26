@@ -6,7 +6,7 @@
 
 // global variables
 let circleSize = 10;
-let colorArray = ["green", "cyan", "purple"];
+let colorArray = ["green","red","blue"];
 let colorIndex = 0;
 let shape;
 let overlay;
@@ -36,7 +36,7 @@ function drawAndMoveCircle(){
   }
 }
 
-function scrollColour(){
+function mouseWheel(event){
   // changes the colour of the shapes using the scroll wheel
   print(event.delta);
   if(event.delta < 0){
@@ -48,12 +48,11 @@ function scrollColour(){
 }
 
 function mouseShape(){
-if(mouseIsPressed){
-  if(keyIsPressed){
-      if(key==="a") overlay.rect(mouseX,mouseY,30,20);
-      if(key==="b") overlay.circle(mouseX,mouseY,20);
-      if(key==="c") overlay.square(mouseX,mouseY,20)
-    }
-    image(overlay,0,0);
+  fill(colorArray[colorIndex]); 
+  if(mouseIsPressed){
+    if(key==="a") overlay.rect(mouseX,mouseY,30,20);
+    if(key==="b") overlay.circle(mouseX,mouseY,30);
+    if(key==="c") overlay.square(mouseX,mouseY,30);
   }
+  image(overlay,0,0);
 }
