@@ -8,6 +8,7 @@
 let circleSize = 10;
 let colorArray = ["green", "cyan", "purple"];
 let colorIndex = 0;
+let shape;
 let overlay;
 
 function setup() {
@@ -46,20 +47,13 @@ function scrollColour(){
   }
 }
 
-// function chooseShape(){
-//  if(keyIsPressed){
-//    if(key==="a") shape = "rect";
-//    if(key==="b") shape = "circle";
-//    if(key==="c") shape = "triangle";
-//  }
-//}
-
 function mouseShape(){
-  // draws a shape at the mouse position when the mouse is pressed
-  if(mouseIsPressed){
-    overlay.fill(colorArray[colorIndex]);
-    overlay.stroke(colorArray[colorIndex]);
-    overlay.rect(mouseX,mouseY,30,20);
+if(mouseIsPressed){
+  if(keyIsPressed){
+      if(key==="a") overlay.rect(mouseX,mouseY,30,20);
+      if(key==="b") overlay.circle(mouseX,mouseY,20);
+      if(key==="c") overlay.square(mouseX,mouseY,20)
+    }
+    image(overlay,0,0);
   }
-  image(overlay,0,0);
 }
