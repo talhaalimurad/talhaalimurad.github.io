@@ -5,13 +5,13 @@
 // shapes of various different colours
 
 // global variables
-let circleSize = 10;
 let colorArray = ["lightgreen","plum","skyblue"];
 let colorIndex = 0;
-let shape;
+let circleSize = 10;
 let overlay;
 
 function setup() {
+  // creates two seperate canvases
   createCanvas(windowWidth, windowHeight);
   overlay = createGraphics(width, height);
   noStroke();
@@ -20,6 +20,7 @@ function setup() {
 function draw() {
   background(220);
   drawAndMoveCircle();
+  showPreview()
   mouseShape();
   createText();
 }
@@ -29,12 +30,10 @@ function drawAndMoveCircle(){
   // decreases in size constantly
   fill("lightgreen");
   circle(width/2,height/2,circleSize);
-  if(circleSize <= 150){
-    circleSize = circleSize += 3;
+  if(circleSize < 150){
+    circleSize = circleSize += 4;
   }
-  else{
-    circleSize = 10;
-  }
+  else(circleSize = 10);
 }
 
 function mouseWheel(event){
@@ -49,18 +48,29 @@ function mouseWheel(event){
 }
 
 function mouseShape(){
+  // draws a shape at the mouse position depending on the key pressed
   overlay.fill(colorArray[colorIndex]); 
   if(mouseIsPressed){
     if(key==="a") overlay.rect(mouseX,mouseY,30,20);
     if(key==="s") overlay.circle(mouseX,mouseY,25);
     if(key==="d") overlay.square(mouseX,mouseY,25);
   }
+  // allows the user to clear the canvas
+  if(keyCode===32) overlay.clear();
   image(overlay,0,0);
 }
 
 function createText(){
+  // writes the authors name on the screen
   fill(0);
   textSize(16);
   textFont("Calibri");
   text("Talha Ali Murad", width/2, height/2);
+}
+
+function showPreview(){
+  // shows a preview of the chosen shape at the mouse position
+  if(key==="a") rect(mouseX, mouseY, 30,20);
+  if(key==="s") circle(mouseX,mouseY,25);
+  if(key==="d") square(mouseX,mouseY,25);
 }
