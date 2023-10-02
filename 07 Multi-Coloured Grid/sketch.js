@@ -12,14 +12,15 @@ let gridSpacing = 25;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(0);
   document.addEventListener("contextmenu", event => event.preventDefault())
   drawGrid();
 }
 
 function drawGrid(){
   // draws multi coloured squares covering the entire canvas
-  for(let x = 0; x < width; x = x + gridSpacing){
-    for(let y = 0; y  < height; y = y + gridSpacing){
+  for(let x = 0; x < width - gridSpacing; x = x + gridSpacing){
+    for(let y = 0; y  < height - gridSpacing; y = y + gridSpacing){
       b = random(70, 250,);
       fill(20,20,b);
       square(x, y, squareSize);
@@ -28,6 +29,7 @@ function drawGrid(){
 }
 
 function mousePressed(){
+  background(0);
   drawGrid();
   if(mouseButton === LEFT){
     squareSize = squareSize += 5;
