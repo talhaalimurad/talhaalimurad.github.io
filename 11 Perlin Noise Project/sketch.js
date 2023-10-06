@@ -6,6 +6,8 @@
 
 // global variables
 let rectWidth = 3;
+let rectHeightTime = 20;
+let noiseShift = 0.005;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -16,7 +18,10 @@ function generateTerrain(){
   // drawing rectangles of random heights using a loop
   for(let x = 0; x < width; x += rectWidth){
     rectMode(CORNERS);
-    let rectHeight = random(0, height);
+    let rectHeight = noise(rectHeightTime);
+    rectHeight = map(rectHeight, 0, 1, 5, height);
+    rectHeightTime += noiseShift;
+    fill(0);
     rect(x , height, x + rectWidth, height - rectHeight);
   }
 }
