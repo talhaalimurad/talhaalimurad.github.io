@@ -11,7 +11,8 @@ let noiseShift = 0.005;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  generateTerrain();
+  //generateTerrain();
+  frameRate(2);
 }
 
 function generateTerrain(){
@@ -27,5 +28,6 @@ function generateTerrain(){
 }
 
 function draw() {
-  // background(220);
+  background(220);
+  generateTerrain();
 }
