@@ -9,7 +9,7 @@ let rectWidth = 2;
 let rectHeightTime = 0;
 let noiseShift = 0.005;
 let peakX, peakY;
-let globalNoise=0;
+let globalNoise = 0;
 
 
 function setup() {
@@ -19,7 +19,7 @@ function setup() {
 }
 
 function generateTerrain(noiseValue){
-  // drawing rectangles of random heights using a loop
+  // draws smooth moving terrain of somewhat random heights using noise()
   globalNoise += noiseShift;
   peakY = height;
   for(let x = 0; x < width; x += rectWidth){
@@ -36,9 +36,14 @@ function generateTerrain(noiseValue){
 }
 
 function drawFlag(x, y){
+  // draws a flag at the highest peak of the terrain
   fill(255, 0, 0);
   rect(x - 2, y, x + 2, y - 30);
   triangle(x - 2, y - 40, x - 2, y - 20, x + 15, y - 30);
+}
+
+function drawAverage(){
+  // gets the average height of all the rectangles and renders it onscreen
 }
 
 function draw() {
