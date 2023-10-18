@@ -24,15 +24,15 @@ function generateTerrain(noiseValue){
   // draws smooth moving terrain of somewhat random heights using noise()
   globalNoise += noiseShift;
   peakY = height;
-  
+  allHeights = [];
   for(let x = 0; x < width; x += rectWidth){
     noiseValue += noiseShift;
     
     let rectHeight = noise(noiseValue) * height;
-    allHeights.push(rectHeight);
+    allHeights.push(height - rectHeight);
 
     fill(0);
-    //noStroke();
+    noStroke();
     rect(x , height, x + rectWidth, height - rectHeight);
     
     if(peakY > height - rectHeight){
@@ -51,14 +51,15 @@ function drawFlag(x, y){
 
 function drawAverage(){
   // gets the average height of all the rectangles and renders it onscreen
+  let sumHeights = 0;
   for(let h of allHeights){
-    let sumHeights = sumHeights + h;
-    avgHeight = sumHeights/allHeights.length;
+    sumHeights = sumHeights + h;
   }
 
+  avgHeight = sumHeights/allHeights.length;
   stroke(255, 0, 0);
   strokeWeight(5);
-  line(0, avgHeight, 0, -avgHeight);
+  line(0, avgHeight, width, avgHeight);
 }
 
 function draw() {
