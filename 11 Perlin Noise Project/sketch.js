@@ -2,32 +2,31 @@
 // Talha Ali Murad
 // 05-10-2023
 //
-// Generating random terrain using noise()
+// generating random terrain using noise()
+// calculating the average height and rendering it onscreen
+// drawing a flag at the highest peak of the terrain
 
 // global variables
 let rectWidth = 2;
-let rectHeightTime = 0;
-let noiseShift = 0.005;
+let rectHeightTime = 0, noiseShift = 0.005;
+let panningNoise = 0;
 let peakX, peakY;
-let globalNoise = 0;
-let allHeights = [];
-let avgHeight;
+let allHeights, avgHeight;
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CORNERS);
-  peakY = height;
 }
 
 function generateTerrain(noiseValue){
-  // draws smooth moving terrain of somewhat random heights using noise()
-  globalNoise += noiseShift;
+  // draws smooth moving terrain of random heights using noise()
+  panningNoise += noiseShift;
   peakY = height;
   allHeights = [];
+  
   for(let x = 0; x < width; x += rectWidth){
     noiseValue += noiseShift;
-    
     let rectHeight = noise(noiseValue) * height;
     allHeights.push(height - rectHeight);
 
@@ -35,6 +34,7 @@ function generateTerrain(noiseValue){
     noStroke();
     rect(x , height, x + rectWidth, height - rectHeight);
     
+    // calculates the highest point
     if(peakY > height - rectHeight){
       peakX = x + rectWidth;
       peakY = height - rectHeight;
@@ -43,14 +43,14 @@ function generateTerrain(noiseValue){
 }
 
 function drawFlag(x, y){
-  // draws a flag at the highest peak of the terrain
+  // draws a flag at the highest point of the terrain
   fill(255, 0, 0);
   rect(x - 2, y, x + 2, y - 30);
   triangle(x - 2, y - 40, x - 2, y - 20, x + 15, y - 30);
 }
 
 function drawAverage(){
-  // gets the average height of all the rectangles and renders it onscreen
+  // renders the average height of all the rectangles
   let sumHeights = 0;
   for(let h of allHeights){
     sumHeights = sumHeights + h;
@@ -64,7 +64,7 @@ function drawAverage(){
 
 function draw() {
   background(220);
-  generateTerrain(globalNoise);
+  generateTerrain(panningNoise);
   drawFlag(peakX, peakY);
   drawAverage();
 }
