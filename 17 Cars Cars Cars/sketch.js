@@ -10,13 +10,14 @@ let myCar;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  myCar = new Vehicle(width/2, height/3);
+  myCar = new Vehicle(width/2);
 }
 
 function draw() {
   background(220);
   drawRoad();
   myCar.display();
+  myCar.move();
 }
 
 function drawRoad(){
@@ -35,13 +36,15 @@ function drawRoad(){
 }
 
 class Vehicle{
-  constructor(x, y){
+  constructor(x){
     this.choice = Math.floor(random(0, 1));
-    this.direction = Math.floor(random(0, 1));
-    this.xSpeed = 5;
+    this.direction = Math.floor(random(0, 2));
     this.color = [random(255), random(255), random(255)];
     this.x = x;
-    this.y = y;
+    this.y = random(height/4, height/2);
+    this.xTime = random(10);
+    this.timeShift = 0.01;
+    this.maxSpeed = random(5);
   }
 
   display(){
@@ -52,25 +55,29 @@ class Vehicle{
 
   move(){
     if(this.direction===1){
-      if(this.x < width){
-        this.x += this.xSpeed;
-      }
+      let xSpeed = noise(this.xTime);
+      xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
+      this.xTime += this.timeShift;
+      this.x += xSpeed;
     }
+
     else if(this.direction===0){
-      if(this.x < width){
-        this.x -= this.xSpeed;
-      }
+      let xSpeed = noise(this.xTime);
+      xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
+      this.xTime += this.timeShift;
+      this.x -= xSpeed;
     }
+
+    if(this.x < 0) this.x += width;
+    if(this.x > width) this.x -= width;
   }
 
   speedUp(){
-    if(this.xSpeed < 15){
-      this.xSpeed++;
-    }
+
   }
 
   speedDown(){
-    this.xSpeed -= 15;
+
   }
 
   changeColor(){
