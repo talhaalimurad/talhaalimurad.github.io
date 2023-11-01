@@ -13,7 +13,7 @@ let vehicles = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for(let numVehicles = 20; numVehicles > 0; numVehicles--){
-    vehicles.push(new Vehicle(width/2));
+    vehicles.push(new Vehicle(random(0, width)));
   }
 }
 
@@ -47,7 +47,7 @@ class Vehicle{
     this.direction = Math.floor(random(0, 2));
     this.color = [random(255), random(255), random(255)];
     this.x = x;
-    this.y =  random(height/2 + 5, height - height/4 - 15)
+    this.y =  random(height/2 + 5, height - height/4 - 15);
     // random(height/4, height/2 - 20);
     // height/2 + 5; middle of road below line
     // height/2 - 20; middle of road above line
@@ -84,17 +84,11 @@ class Vehicle{
   }
 
   speedUp(){
-
   }
-
   speedDown(){
-
   }
-
   changeColor(){
   }
-
   action(){
-
   }
 }
