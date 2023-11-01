@@ -5,19 +5,25 @@
 // 
 
 //  global variables
-let segW = 25;
+let segL = 25;
 let myCar;
+let numVehicles;
+let vehicles = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  myCar = new Vehicle(width/2);
+  for(let numVehicles = 20; numVehicles > 0; numVehicles--){
+    vehicles.push(new Vehicle(width/2));
+  }
 }
 
 function draw() {
   background(220);
   drawRoad();
-  myCar.display();
-  myCar.move();
+  for(let index = 0; index < 20; index++){
+    vehicles[index].display();
+    vehicles[index].move();
+  }
 }
 
 function drawRoad(){
@@ -31,7 +37,7 @@ function drawRoad(){
     stroke(255);
     strokeWeight(5);
     line(x, height/2, x + 8, height/2);
-    x += segW;
+    x += segL;
   }
 }
 
@@ -41,7 +47,12 @@ class Vehicle{
     this.direction = Math.floor(random(0, 2));
     this.color = [random(255), random(255), random(255)];
     this.x = x;
-    this.y = random(height/4, height/2);
+    this.y =  random(height/2 + 5, height - height/4 - 15)
+    // random(height/4, height/2 - 20);
+    // height/2 + 5; middle of road below line
+    // height/2 - 20; middle of road above line
+    // height/4; top of road
+    // height - height/4 - 15; bottom of road
     this.xTime = random(10);
     this.timeShift = 0.01;
     this.maxSpeed = random(5);
