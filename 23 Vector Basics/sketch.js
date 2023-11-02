@@ -15,8 +15,8 @@ function mousePressed(){
 }
 
 function draw() {
-  background(220);
   movers.push(new Mover(mouseX, mouseY));
+  background(220);
   for(let i = 0;  i < movers. length; i++){
     let m = movers[i];
     m.move();
@@ -41,7 +41,7 @@ class Mover{
     this.vel.add(this.gravity);
     this.pos.add(this.vel);
     this.lifetime--;
-    if(this.liftime<0) this.alive===false;
+    if(this.liftime < 0) this.alive = false;
   }
 
   display(){
