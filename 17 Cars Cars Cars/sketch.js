@@ -43,7 +43,7 @@ function drawRoad(){
 
 class Vehicle{
   constructor(x){
-    this.choice = Math.floor(random(0, 1));
+    this.vChoice = Math.floor(random(0, 2));
     this.direction = Math.floor(random(0, 2));
     this.color = [random(255), random(255), random(255)];
     this.x = x;
@@ -52,7 +52,7 @@ class Vehicle{
     // height/2 + 5; middle of road below line
     // height/2 - 20; middle of road above line
     // height/4; top of road
-    // height - height/4 - 15; bottom of road
+    // height - height/4 - 15; bottom of road;
     this.xTime = random(10);
     this.timeShift = 0.01;
     this.maxSpeed = random(5);
