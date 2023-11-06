@@ -99,17 +99,20 @@ class Vehicle{
 
   speedUp(){
     if(this.speedChance===1){
-      for(let s = xSpeed; s < xSpeed + 15; s++){
-        xSpeed += 5;
+      for(let s = this.xSpeed; s < this.xSpeed + 15; s++){
+        this.xSpeed += 5;
       }
     }
   }
+  
   speedDown(){
     if(this.speedChance===0){
-      for(let s = xSpeed; s > 5; s--)
-      xSpeed -= 5;
+      for(let s = this.xSpeed; s > 5; s--){
+        this.xSpeed -= 5;
+      }
     }
   }
+
   changeColor(){
   }
   action(){
