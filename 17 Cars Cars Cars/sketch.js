@@ -8,21 +8,28 @@
 let segL = 25;
 let myCar;
 let numVehicles;
-let vehicles = [];
+let eastbound = [];
+let westbound = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for(let numVehicles = 20; numVehicles > 0; numVehicles--){
-    vehicles.push(new Vehicle(random(0, width)));
+    let d = Math.floor(random(0, 2));
+    if(d===1) eastbound.push(new Vehicle(random(0, width), d));
+    if(d===0) westbound.push(new Vehicle(random(0, width), d));
   }
 }
 
 function draw() {
   background(220);
   drawRoad();
-  for(let index = 0; index < 20; index++){
-    vehicles[index].display();
-    vehicles[index].move();
+  for(let car of eastbound){
+    car.display();
+    car.move();
+  }
+  for(let car of westbound){
+    car.display();
+    car.move();
   }
 }
 
@@ -42,13 +49,14 @@ function drawRoad(){
 }
 
 class Vehicle{
-  constructor(x){
+  constructor(x, d){
     this.vehicleChoice = Math.floor(random(0, 2));
-    this.direction = Math.floor(random(0, 2));
+    this.direction = d;
     this.speedChance = Math.floor(random(0, 2));
     this.color = [random(255), random(255), random(255)];
     this.x = x;
-    this.y =  random(height/2 + 5, height - height/4 - 15);
+    this.yEast = random(height/4, height/2 - 20);
+    this.yWest =  random(height/2 + 5, height - height/4 - 15);
     // random(height/4, height/2 - 20);
     // height/2 + 5; middle of road below line
     // height/2 - 20; middle of road above line
@@ -61,20 +69,39 @@ class Vehicle{
 
   display(){
     noStroke();
-    if(this.vehicleChoice===1){
-      fill(this.color[0], this.color[1], this.color[2]);
-      rect(this.x, this.y, 30, 15);
-      fill(200, 230, 255);
-      rect(this.x + 19.3, this.y - 4, 10, 5);
-      rect(this.x, this.y - 4, 10, 5);
-      rect(this.x + 19.3, this.y + 15, 10, 5);
-      rect(this.x, this.y + 15, 10, 5);
+    if(this.direction===1){
+      if(this.vehicleChoice===1){
+        fill(this.color[0], this.color[1], this.color[2]);
+        rect(this.x, this.yEast, 30, 15);
+        fill(200, 230, 255);
+        rect(this.x + 19.3, this.yEast - 4, 10, 5);
+        rect(this.x, this.yEast - 4, 10, 5);
+        rect(this.x + 19.3, this.yEast + 15, 10, 5);
+        rect(this.x, this.yEast + 15, 10, 5);
+      }
+      else if(this.vehicleChoice===0){
+        fill(this.color[0], this.color[1], this.color[2]);
+        rect(this.x, this.yEast, 30, 20);
+        fill(200, 230, 255);
+        rect(this.x + 10, this.yEast, 10, 19.5);
+      }
     }
-    else if(this.vehicleChoice===0){
-      fill(this.color[0], this.color[1], this.color[2]);
-      rect(this.x, this.y, 30, 20);
-      fill(200, 230, 255);
-      rect(this.x + 10, this.y, 10, 19.5);
+    else{
+      if(this.vehicleChoice===1){
+        fill(this.color[0], this.color[1], this.color[2]);
+        rect(this.x, this.yWest, 30, 15);
+        fill(200, 230, 255);
+        rect(this.x + 19.3, this.yWest - 4, 10, 5);
+        rect(this.x, this.yWest - 4, 10, 5);
+        rect(this.x + 19.3, this.yWest + 15, 10, 5);
+        rect(this.x, this.yWest + 15, 10, 5);
+      }
+      else if(this.vehicleChoice===0){
+        fill(this.color[0], this.color[1], this.color[2]);
+        rect(this.x, this.yWest, 30, 20);
+        fill(200, 230, 255);
+        rect(this.x + 10, this.yWest, 10, 19.5);
+      }
     }
   }
 
