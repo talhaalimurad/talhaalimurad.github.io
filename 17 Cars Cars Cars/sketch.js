@@ -21,7 +21,7 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(255);
   drawRoad();
   for(let car of eastbound){
     car.display();
@@ -52,19 +52,16 @@ class Vehicle{
   constructor(x, d){
     this.vehicleChoice = Math.floor(random(0, 2));
     this.direction = d;
-    this.speedChance = Math.floor(random(0, 2));
+    this.speedChance = Math.floor(random(0, 100));
     this.color = [random(255), random(255), random(255)];
     this.x = x;
     this.yEast = random(height/4, height/2 - 20);
     this.yWest =  random(height/2 + 5, height - height/4 - 15);
-    // random(height/4, height/2 - 20);
-    // height/2 + 5; middle of road below line
-    // height/2 - 20; middle of road above line
-    // height/4; top of road
-    // height - height/4 - 15; bottom of road;
-    this.xTime = random(10);
-    this.timeShift = 0.01;
-    this.maxSpeed = random(5);
+    // this.xTime = random(10);
+    // this.timeShift = 0.01;
+    // this.maxSpeed = random(5);
+    this.xSpeed = 5;
+    this.maxSpeed = 10;
   }
 
   display(){
@@ -107,17 +104,14 @@ class Vehicle{
 
   move(){
     if(this.direction===1){
-      let xSpeed = noise(this.xTime);
-      xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
-      this.xTime += this.timeShift;
-      this.x += xSpeed;
+      // let xSpeed = noise(this.xTime);
+      // xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
+      // this.xTime += this.timeShift;
+      this.x += this.xSpeed;
     }
 
     else if(this.direction===0){
-      let xSpeed = noise(this.xTime);
-      xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
-      this.xTime += this.timeShift;
-      this.x -= xSpeed;
+      this.x -= this.xSpeed;
     }
 
     if(this.x < 0) this.x += width;
@@ -125,23 +119,28 @@ class Vehicle{
   }
 
   speedUp(){
-    if(this.speedChance===1){
-      for(let s = this.xSpeed; s < this.xSpeed + 15; s++){
-        this.xSpeed += 5;
-      }
+    for(let s = 0; s < this.maxSpeed; s++){
+      this.xSpeed += 5;
     }
   }
   
   speedDown(){
-    if(this.speedChance===0){
-      for(let s = this.xSpeed; s > 5; s--){
-        this.xSpeed -= 5;
-      }
+    for(let s = this.xSpeed; s > 2; s--){
+      this.xSpeed -= 5;
     }
   }
 
   changeColor(){
   }
   action(){
+    this.display();
+    this.move();
+    if(this.speedChance===1){
+      this.speedUp();
+    }
+    else if(this.speedChance===0){
+      this.speedDown();
+    }
+    this.changeColor();
   }
 }
