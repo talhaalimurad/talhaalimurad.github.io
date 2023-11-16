@@ -48,19 +48,16 @@ function drawRoad() {
 }
 
 class Vehicle {
-  constructor(x, y, d) {
+  constructor(x, d) {
     this.vehicleChoice = Math.floor(random(0, 2));
     this.direction = d;
     this.speedChance = Math.floor(random(0, 100));
     this.color = color(random(255), random(255), random(255));
     this.x = x;
-    this.y = y;
+    this.yEast = random(height / 4, height / 2 - 20);
+    this.yWest = random(height / 2 + 5, height - height / 4 - 15);
     this.xSpeed = 5;
     this.maxSpeed = 10;
-
-    // y values for the top and bottom
-    // random(height / 4, height / 2 - 20);
-    // random(height / 2 + 5, height - height / 4 - 15);
     
     // random speed values
     // this.xTime = random(10);
@@ -82,25 +79,29 @@ class Vehicle {
 
   drawCar() {
     fill(this.color);
-    rect(this.x, this.y, 30, 15);
+    rect(this.x, this.yEast, 30, 15);
     fill(200, 230, 255);
-    rect(this.x + 19.3, this.y - 4, 10, 5);
-    rect(this.x, this.y - 4, 10, 5);
-    rect(this.x + 19.3, this.y + 15, 10, 5);
-    rect(this.x, this.y + 15, 10, 5);
+    rect(this.x + 19.3, this.yEast - 4, 10, 5);
+    rect(this.x, this.yEast - 4, 10, 5);
+    rect(this.x + 19.3, this.yEast  + 15, 10, 5);
+    rect(this.x, this.yEast + 15, 10, 5);
   }
 
   drawCarTwo(){
     fill(this.color);
-    rect(this.x, this.y, 30, 20);
+    rect(this.x, this.yEast, 30, 20);
     fill(200, 230, 255);
-    rect(this.x + 10, this.y, 10, 19.5);
+    rect(this.x + 10, this.yEast, 10, 19.5);
   }
 
   move() {
     if (this.direction === 1) {
       this.x += this.xSpeed;
 
+      // for speed try using a for loop setting i as the xSpeed
+      // then increment it by one until it reaches xSpeed + 15
+      // then once it reaches that set it back to xSpeed in the speedDown() function
+      
       // speed using random speed values
       // let xSpeed = noise(this.xTime);
       // xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
