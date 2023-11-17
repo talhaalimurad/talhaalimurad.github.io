@@ -102,7 +102,7 @@ class Vehicle {
       // then increment it by one until it reaches xSpeed + 15
       // then once it reaches that set it back to xSpeed in the speedDown() function
       
-      // speed using random speed values
+      // random speed values
       // let xSpeed = noise(this.xTime);
       // xSpeed = map(xSpeed, 0, 1, this.maxSpeed, this.maxSpeed);
       // this.xTime += this.timeShift;
