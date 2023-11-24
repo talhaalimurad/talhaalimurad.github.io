@@ -101,6 +101,8 @@ class Vehicle {
       // for speed try using a for loop setting i as the xSpeed
       // then increment it by one until it reaches xSpeed + 15
       // then once it reaches that set it back to xSpeed in the speedDown() function
+      // or use an if statement saying is speed===xSpeed + 15 and gradually reduce the
+      // speed to xSpeed
       
       // random speed values
       // let xSpeed = noise(this.xTime);
