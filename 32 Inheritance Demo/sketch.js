@@ -1,9 +1,7 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Inheritance Demo
+// Talha Ali Murad
+// 29-11-2023
+// 
 
 
 function setup() {
