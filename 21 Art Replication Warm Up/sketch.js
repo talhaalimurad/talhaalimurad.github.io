@@ -1,23 +1,30 @@
 // Art Replication
 // Talha Ali Murad
 // 26-10-2023
-// Computer Composition With Lines
+// Ninety Parallel Sinusoids With Linearly Increasing Period
 
-let intervals = 10;
-let peak = 20;
+// Global Variables
+let period = 0.01;
+let peak = 50;
+let trough = 100;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  angleMode(DEGREES);
+  drawSinusiod();
 }
 
 function draw() {
-  background(220);
-  drawArt();
+  //background(220);
 }
 
-function drawArt(){
-  for(let x = 0 ; x<width; x++){
-    let y = sin(x/intervals) * peak;
-    point(x,y+height/2);
+function drawSinusiod(){
+  for(let x = 0; x < width; x++){
+    let y = sin(x * period * 0.9);
+    y = map(y, -1, 1, peak, trough);
+    if(x > width/8 && x < width * 0.77){
+      point(x, y);
+      period += 0.00298;
+    }
   }
-  
 }
