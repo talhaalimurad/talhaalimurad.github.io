@@ -5,8 +5,8 @@
 
 // Global Variables
 let period = 0.1;
-let peak = 100;
-let trough = 180;
+let peak = 110;
+let trough = 150;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -20,7 +20,7 @@ function draw() {
 }
 
 function drawSinusiods(){
-  for(let i = 120; i >= 0; i--){
+  for(let i = 100; i >= 0; i--){
     period = 0.1;
     peak += 4;
     trough += 4;
@@ -34,7 +34,7 @@ function drawSinusiod(){
     y = map(y, -1, 1, peak, trough);
     if(x > width/8 && x < width * 0.66){
       point(x, y);
-      period += 0.0038;
+      period += 0.0046;
     }
   }
 }
