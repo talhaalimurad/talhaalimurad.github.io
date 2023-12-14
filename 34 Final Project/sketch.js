@@ -10,22 +10,21 @@ let customerOneLeft;
 let customerOneRight;
 let facingRight = true;
 let myCustomer;
-this.walkTime = 60;
 let playerX;
 let playerY;
 
 function preload(){
-  playerLeft = loadImage("assets/Player Left.png");
-  playerRight = loadImage("assets/Player Right.png");
-  customerOneLeft = loadImage("assets/CustomerOne Right.png");
-  customerOneRight = loadImage("assets/CustomerOne Right.png");
+  playerLeft = loadImage("assets/PlayerLeft.png");
+  playerRight = loadImage("assets/PlayerRight.png");
+  customerOneLeft = loadImage("assets/CustomerOneRight.png");
+  customerOneRight = loadImage("assets/CustomerOneRight.png");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   playerX = width/2;
   playerY = height/2;
-  myCustomer = new Customer(width/2, height/2);
+  myCustomer = new Customer(random(0, width), random(0, height));
 }
 
 function draw() {
@@ -36,9 +35,9 @@ function draw() {
 }
 
 function drawPlayer(x, y){
-  if(facingRight===true) image(playerRight, x, y);
+  if(facingRight===true) image(playerRight, x, y, 70, 70);
   else {
-    image(playerLeft, x, y);
+    image(playerLeft, x, y, 70, 70);
   }
 
   if(keyIsDown(RIGHT_ARROW)){
@@ -57,14 +56,12 @@ class Customer{
   constructor(x, y){
     this.x = x;
     this.y = y;
-    this.type;
-    this.customers = [];
     this.facingRight = true;
-    this.direction = floor(random(0, 4));
+    this.direction;
   }
 
   draw(){
-    if(this.facingRight===true) image(customerOneRight, this.x, this.y, 55, 55);
+    if(this.facingRight===true) image(customerOneRight, this.x, this.y, 60, 60);
 
   }
 
