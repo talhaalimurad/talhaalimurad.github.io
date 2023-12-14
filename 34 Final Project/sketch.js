@@ -16,7 +16,7 @@ let playerY;
 function preload(){
   playerLeft = loadImage("assets/PlayerLeft.png");
   playerRight = loadImage("assets/PlayerRight.png");
-  customerOneLeft = loadImage("assets/CustomerOneRight.png");
+  customerOneLeft = loadImage("assets/CustomerOneLeft.png");
   customerOneRight = loadImage("assets/CustomerOneRight.png");
 }
 
@@ -57,23 +57,38 @@ class Customer{
     this.x = x;
     this.y = y;
     this.facingRight = true;
-    this.direction;
+    this.direction = floor(random(0, 4));
   }
 
   draw(){
     if(this.facingRight===true) image(customerOneRight, this.x, this.y, 60, 60);
+    else image(customerOneLeft, this.x, this.y, 60, 60);
 
   }
 
   move(){
-    this.direction = floor(random(0, 4));
-    if(this.x >= 10 && this.x <= width){
-      if(this.y >= 10 && this.y <= height){
-        if(this.direction===0) this.x += 4;
-        if(this.direction===1) this.x -= 4;
-        if(this.direction===2) this.y += 4;
-        if(this.direction===3) this.y -= 4;
-      }
+    if(frameCount%120===0){
+      this.direction = floor(random(0, 4));
     }
+    if(this.x >= 10 && this.x <= width - 20){
+      if(this.y >= 10 && this.y <= height - 20){
+        if(this.direction===0){
+          this.facingRight = true;
+          this.x += 2;
+        }
+        if(this.direction===1){
+          this.facingRight = false;
+          this.x -= 2;
+        }
+        if(this.direction===2) this.y += 2;
+        if(this.direction===3) this.y -= 2;
+      }
+      else if(this.y >= height) this.y -= 10;
+      else this.y += 10;
+    }
+    else if(this.x > width) this.x -= 10;
+    else this.x += 10;
   }
+
+
 }
