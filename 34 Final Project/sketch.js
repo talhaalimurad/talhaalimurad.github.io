@@ -6,18 +6,23 @@
 // global variables
 let playerLeft;
 let playerRight;
-let customerOneLeft;
-let customerOneRight;
-let facingRight = true;
-let myCustomer;
 let playerX;
 let playerY;
+let customerOneLeft;
+let customerOneRight;
+let myCustomer;
+let employeeLeft;
+let employeeRight;
+let myEmployee;
+let facingRight = true;
 
 function preload(){
   playerLeft = loadImage("assets/PlayerLeft.png");
   playerRight = loadImage("assets/PlayerRight.png");
   customerOneLeft = loadImage("assets/CustomerOneLeft.png");
   customerOneRight = loadImage("assets/CustomerOneRight.png");
+  employeeLeft = loadImage("assets/EmployeeLeft.png");
+  employeeRight = loadImage("assets/EmployeeRight.png");
 }
 
 function setup() {
@@ -25,13 +30,14 @@ function setup() {
   playerX = width/2;
   playerY = height/2;
   myCustomer = new Customer(random(0, width), random(0, height));
+  myEmployee = new Employee(random(0, width), random(0, height));
 }
 
 function draw() {
   background(243, 238, 156);
   drawPlayer(playerX, playerY);
-  myCustomer.draw();
-  myCustomer.move();
+  myCustomer.update();
+  myEmployee.update();
 }
 
 function drawPlayer(x, y){
@@ -43,13 +49,22 @@ function drawPlayer(x, y){
   if(keyIsDown(RIGHT_ARROW)){
     playerX += 5;
     facingRight = true;
+    if(playerX >= width) playerX -= width;
   }
   if(keyIsDown(LEFT_ARROW)){
     playerX -= 5;
     facingRight = false;
+    if(playerX <= 0) playerX += width;
   }
-  if(keyIsDown(DOWN_ARROW)) playerY += 5;
-  if(keyIsDown(UP_ARROW)) playerY -= 5;
+  if(keyIsDown(DOWN_ARROW)){
+    playerY += 5;
+    if(playerY >= height) playerY -= height;
+  }
+
+  if(keyIsDown(UP_ARROW)){
+    playerY -= 5;
+    if(playerY <= 0) playerY += height;
+  }
 }
 
 class Customer{
@@ -70,8 +85,8 @@ class Customer{
     if(frameCount%120===0){
       this.direction = floor(random(0, 4));
     }
-    if(this.x >= 10 && this.x <= width - 20){
-      if(this.y >= 10 && this.y <= height - 20){
+    if(this.x >= 0 && this.x <= width){
+      if(this.y >= 0 && this.y <= height){
         if(this.direction===0){
           this.facingRight = true;
           this.x += 2;
@@ -83,12 +98,67 @@ class Customer{
         if(this.direction===2) this.y += 2;
         if(this.direction===3) this.y -= 2;
       }
-      else if(this.y >= height) this.y -= 10;
-      else this.y += 10;
+      else if(this.y >= height) this.y -= height;
+      else this.y += height;
     }
-    else if(this.x > width) this.x -= 10;
-    else this.x += 10;
+    else if(this.x >= width) this.x -= width;
+    else this.x += width;
   }
 
+  update(){
+    myCustomer.draw();
+    myCustomer.move();
+  }
 
+  buyProduct(){
+
+  }
+}
+
+class Employee{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+    this.facingRight = true;
+    this.direction = floor(random(0, 4));
+  }
+
+  draw(){
+    if(this.facingRight===true) image(employeeRight, this.x, this.y, 55, 60);
+    else image(employeeLeft, this.x, this.y, 55, 60);
+
+  }
+
+  move(){
+    if(frameCount%120===0){
+      this.direction = floor(random(0, 4));
+    }
+    if(this.x >= 0 && this.x <= width){
+      if(this.y >= 0 && this.y <= height){
+        if(this.direction===0){
+          this.facingRight = true;
+          this.x += 2;
+        }
+        if(this.direction===1){
+          this.facingRight = false;
+          this.x -= 2;
+        }
+        if(this.direction===2) this.y += 2;
+        if(this.direction===3) this.y -= 2;
+      }
+      else if(this.y >= height) this.y -= height;
+      else this.y += height;
+    }
+    else if(this.x >= width) this.x -= width;
+    else this.x += width;
+  }
+
+  update(){
+    myEmployee.draw();
+    myEmployee.move();
+  }
+
+  stockProduct(){
+
+  }
 }
