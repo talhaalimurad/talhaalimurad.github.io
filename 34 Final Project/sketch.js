@@ -4,17 +4,15 @@
 // Monkey Mart Replica Game
 
 // global variables
-let playerLeft;
-let playerRight;
-let playerX;
-let playerY;
-let customerOneLeft;
-let customerOneRight;
-let myCustomer;
-let employeeLeft;
-let employeeRight;
-let myEmployee;
+let playerLeft, playerRight;
+let playerX, playerY;
 let facingRight = true;
+let customerOneLeft, customerOneRight;
+let employeeLeft, employeeRight;
+let myEmployee;
+let myCustomer;
+let shelf;
+let myShelf;
 
 function preload(){
   playerLeft = loadImage("assets/PlayerLeft.png");
@@ -23,6 +21,7 @@ function preload(){
   customerOneRight = loadImage("assets/CustomerOneRight.png");
   employeeLeft = loadImage("assets/EmployeeLeft.png");
   employeeRight = loadImage("assets/EmployeeRight.png");
+  shelf = loadImage("assets/Shelf.png");
 }
 
 function setup() {
@@ -31,13 +30,15 @@ function setup() {
   playerY = height/2;
   myCustomer = new Customer(random(0, width), random(0, height));
   myEmployee = new Employee(random(0, width), random(0, height));
+  myShelf = new Shelf(20, 20);
 }
 
 function draw() {
   background(243, 238, 156);
-  drawPlayer(playerX, playerY);
+  myShelf.display();
   myCustomer.update();
   myEmployee.update();
+  drawPlayer(playerX, playerY);
 }
 
 function drawPlayer(x, y){
@@ -67,18 +68,12 @@ function drawPlayer(x, y){
   }
 }
 
-class Customer{
+class Monkey{
   constructor(x, y){
     this.x = x;
     this.y = y;
     this.facingRight = true;
-    this.direction = floor(random(0, 4));
-  }
-
-  draw(){
-    if(this.facingRight===true) image(customerOneRight, this.x, this.y, 60, 60);
-    else image(customerOneLeft, this.x, this.y, 60, 60);
-
+    this.direction = floor(random(0, 4)); 
   }
 
   move(){
@@ -103,54 +98,17 @@ class Customer{
     }
     else if(this.x >= width) this.x -= width;
     else this.x += width;
-  }
-
-  update(){
-    myCustomer.draw();
-    myCustomer.move();
-  }
-
-  buyProduct(){
-
   }
 }
 
-class Employee{
+class Employee extends Monkey{
   constructor(x, y){
-    this.x = x;
-    this.y = y;
-    this.facingRight = true;
-    this.direction = floor(random(0, 4));
+    super(x, y);
   }
-
+    
   draw(){
     if(this.facingRight===true) image(employeeRight, this.x, this.y, 55, 60);
     else image(employeeLeft, this.x, this.y, 55, 60);
-
-  }
-
-  move(){
-    if(frameCount%120===0){
-      this.direction = floor(random(0, 4));
-    }
-    if(this.x >= 0 && this.x <= width){
-      if(this.y >= 0 && this.y <= height){
-        if(this.direction===0){
-          this.facingRight = true;
-          this.x += 2;
-        }
-        if(this.direction===1){
-          this.facingRight = false;
-          this.x -= 2;
-        }
-        if(this.direction===2) this.y += 2;
-        if(this.direction===3) this.y -= 2;
-      }
-      else if(this.y >= height) this.y -= height;
-      else this.y += height;
-    }
-    else if(this.x >= width) this.x -= width;
-    else this.x += width;
   }
 
   update(){
@@ -159,6 +117,36 @@ class Employee{
   }
 
   stockProduct(){
+  }
+}
 
+class Customer extends Monkey{
+  constructor(x, y){
+    super(x, y);
+  }
+
+  draw(){
+    if(this.facingRight===true) image(customerOneRight, this.x, this.y, 55, 60);
+    else image(customerOneLeft, this.x, this.y, 55, 60);
+  }
+
+  update(){
+    myCustomer.draw();
+    myCustomer.move();
+  }
+
+  BuyProduct(){
+  }
+}
+
+class Shelf{
+  constructor(x, y, color){
+    this.x = x;
+    this.y = y;
+    this.color = color;
+  }
+
+  display(){
+    image(shelf, this.x, this.y, 190, 190);
   }
 }
