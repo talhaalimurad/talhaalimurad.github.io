@@ -7,14 +7,14 @@
 let playerLeft, playerRight;
 let playerX, playerY;
 let facingRight = true;
-let customerOneLeft, customerOneRight;
-let employeeLeft, employeeRight;
-let myEmployee;
-let myCustomer;
-let shelf;
-let myShelf;
+let customerOneLeft, customerOneRight, myCustomer;
+let employeeLeft, employeeRight, myEmployee;
+let shelf, myShelf;
+let tree;
+let banana;
 
 function preload(){
+  // loading all of the images before the program starts
   playerLeft = loadImage("assets/PlayerLeft.png");
   playerRight = loadImage("assets/PlayerRight.png");
   customerOneLeft = loadImage("assets/CustomerOneLeft.png");
@@ -22,26 +22,32 @@ function preload(){
   employeeLeft = loadImage("assets/EmployeeLeft.png");
   employeeRight = loadImage("assets/EmployeeRight.png");
   shelf = loadImage("assets/Shelf.png");
+  tree = loadImage("assets/BananaTree.png");
+  banana = loadImage("assets/Banana.png");
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(800, 800);
   playerX = width/2;
   playerY = height/2;
+
+  // creating objects
   myCustomer = new Customer(random(0, width), random(0, height));
   myEmployee = new Employee(random(0, width), random(0, height));
-  myShelf = new Shelf(20, 20);
+  myShelf = new Shelf(35, 35);
 }
 
 function draw() {
   background(243, 238, 156);
   myShelf.display();
+  bananaTree(570, 0);
   myCustomer.update();
   myEmployee.update();
   drawPlayer(playerX, playerY);
 }
 
 function drawPlayer(x, y){
+  // drawing a player monkey that is controlled by the user using the arrow keys
   if(facingRight===true) image(playerRight, x, y, 70, 70);
   else {
     image(playerLeft, x, y, 70, 70);
@@ -68,7 +74,14 @@ function drawPlayer(x, y){
   }
 }
 
+function bananaTree(x, y){
+  // drawing a banana tree that gives the player a banana when in proximity
+  image(tree, x, y, 230, 230);
+}
+
 class Monkey{
+  // creating a parent class with the random movement and picking up object mechanics
+  // that are applicable to all NPCs
   constructor(x, y){
     this.x = x;
     this.y = y;
@@ -99,10 +112,14 @@ class Monkey{
     else if(this.x >= width) this.x -= width;
     else this.x += width;
   }
+
+  pickUp(){
+  }
 }
 
 class Employee extends Monkey{
   constructor(x, y){
+    // inheriting from the parent class
     super(x, y);
   }
     
@@ -140,10 +157,10 @@ class Customer extends Monkey{
 }
 
 class Shelf{
-  constructor(x, y, color){
+  // creating a class to draw multiple shelf objects
+  constructor(x, y){
     this.x = x;
     this.y = y;
-    this.color = color;
   }
 
   display(){
