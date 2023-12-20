@@ -12,6 +12,7 @@ let employeeLeft, employeeRight, myEmployee;
 let shelf, myShelf;
 let tree;
 let banana;
+let bananas = [];
 
 function preload(){
   // loading all of the images before the program starts
@@ -31,16 +32,18 @@ function setup() {
   playerX = width/2;
   playerY = height/2;
 
+  imageMode(CENTER);
+
   // creating objects
   myCustomer = new Customer(random(0, width), random(0, height));
   myEmployee = new Employee(random(0, width), random(0, height));
-  myShelf = new Shelf(35, 35);
+  myShelf = new Shelf(120, 120);
 }
 
 function draw() {
   background(243, 238, 156);
   myShelf.display();
-  bananaTree(570, 0);
+  bananaTree(680, 100);
   myCustomer.update();
   myEmployee.update();
   drawPlayer(playerX, playerY);
@@ -77,7 +80,20 @@ function drawPlayer(x, y){
 function bananaTree(x, y){
   // drawing a banana tree that gives the player a banana when in proximity
   image(tree, x, y, 230, 230);
+  let d = distance(playerX, playerY, 680, 120);
+  if(d < 50){
+    bananas.push(image(banana, playerX, playerY, 50, 40));
+  }
 }
+
+function distance(x1, y1, x2, y2){
+  let a = Math.abs(x1-x2);
+  let b = Math.abs(y1-y2);
+  let c = Math.sqrt(a*a + b*b);
+  print(c);
+  return c;
+}
+
 
 class Monkey{
   // creating a parent class with the random movement and picking up object mechanics
