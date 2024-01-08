@@ -9,10 +9,9 @@ let playerX, playerY;
 let facingRight = true;
 let customerOneLeft, customerOneRight, myCustomer;
 let employeeLeft, employeeRight, myEmployee;
-let shelf, myShelf;
+// let shelf, myShelf;
 let tree;
-let banana;
-let bananas = [];
+let banana, myBanana;
 
 function preload(){
   // loading all of the images before the program starts
@@ -22,7 +21,7 @@ function preload(){
   customerOneRight = loadImage("assets/CustomerOneRight.png");
   employeeLeft = loadImage("assets/EmployeeLeft.png");
   employeeRight = loadImage("assets/EmployeeRight.png");
-  shelf = loadImage("assets/Shelf.png");
+  // shelf = loadImage("assets/Shelf.png");
   tree = loadImage("assets/BananaTree.png");
   banana = loadImage("assets/Banana.png");
 }
@@ -37,15 +36,16 @@ function setup() {
   // creating objects
   myCustomer = new Customer(random(0, width), random(0, height));
   myEmployee = new Employee(random(0, width), random(0, height));
-  myShelf = new Shelf(120, 120);
+  myBanana = new Banana(playerX, playerY - 50);
+  // myShelf = new Shelf(120, 120);
 }
 
 function draw() {
   background(243, 238, 156);
-  myShelf.display();
-  bananaTree(680, 100);
+  // myShelf.display();
   myCustomer.update();
   myEmployee.update();
+  myBanana.display();
   drawPlayer(playerX, playerY);
 }
 
@@ -74,15 +74,6 @@ function drawPlayer(x, y){
   if(keyIsDown(UP_ARROW)){
     playerY -= 5;
     if(playerY <= 0) playerY += height;
-  }
-}
-
-function bananaTree(x, y){
-  // drawing a banana tree that gives the player a banana when in proximity
-  image(tree, x, y, 230, 230);
-  let d = distance(playerX, playerY, 680, 120);
-  if(d < 50){
-    bananas.push(image(banana, playerX, playerY, 50, 40));
   }
 }
 
@@ -172,14 +163,30 @@ class Customer extends Monkey{
   }
 }
 
-class Shelf{
-  // creating a class to draw multiple shelf objects
+// class Shelf{
+//   // creating a class to draw multiple shelf objects
+//   constructor(x, y){
+//     this.x = x;
+//     this.y = y;
+//   }
+
+//   display(){
+//     image(shelf, this.x, this.y, 190, 190);
+//   }
+// }
+
+class Banana{
   constructor(x, y){
     this.x = x;
     this.y = y;
+    this.d = distance(playerX, playerY, 680, 120);
   }
 
   display(){
-    image(shelf, this.x, this.y, 190, 190);
+    image(tree, 680, 100, 230, 230);
+    if(this.d < 50){
+      image(banana, playerX, playerY - 50, 50, 40);
+      print("banana");
+    }
   }
 }
