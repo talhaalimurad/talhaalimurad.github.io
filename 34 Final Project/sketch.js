@@ -9,9 +9,11 @@ let playerX, playerY;
 let facingRight = true;
 let customerOneLeft, customerOneRight, myCustomer;
 let employeeLeft, employeeRight, myEmployee;
-// let shelf, myShelf;
 let tree;
 let banana, myBanana;
+let stall;
+let holdingBanana = false;
+let stallD;
 
 function preload(){
   // loading all of the images before the program starts
@@ -21,9 +23,9 @@ function preload(){
   customerOneRight = loadImage("assets/CustomerOneRight.png");
   employeeLeft = loadImage("assets/EmployeeLeft.png");
   employeeRight = loadImage("assets/EmployeeRight.png");
-  // shelf = loadImage("assets/Shelf.png");
   tree = loadImage("assets/BananaTree.png");
   banana = loadImage("assets/Banana.png");
+  stall = loadImage("assets/Stall.png");
 }
 
 function setup() {
@@ -37,12 +39,11 @@ function setup() {
   myCustomer = new Customer(random(0, width), random(0, height));
   myEmployee = new Employee(random(0, width), random(0, height));
   myBanana = new Banana(playerX, playerY - 50);
-  // myShelf = new Shelf(120, 120);
 }
 
 function draw() {
   background(243, 238, 156);
-  // myShelf.display();
+  Stall();
   myCustomer.update();
   myEmployee.update();
   myBanana.display();
@@ -139,9 +140,6 @@ class Employee extends Monkey{
     myEmployee.draw();
     myEmployee.move();
   }
-
-  stockProduct(){
-  }
 }
 
 class Customer extends Monkey{
@@ -158,35 +156,30 @@ class Customer extends Monkey{
     myCustomer.draw();
     myCustomer.move();
   }
-
-  BuyProduct(){
-  }
 }
 
-// class Shelf{
-//   // creating a class to draw multiple shelf objects
-//   constructor(x, y){
-//     this.x = x;
-//     this.y = y;
-//   }
-
-//   display(){
-//     image(shelf, this.x, this.y, 190, 190);
-//   }
-// }
+function Stall(){
+  image(stall, 120, 700, 230, 230);
+  stallD = distance(playerX, playerY, 120, 700);
+  if(stallD < 50){
+    holdingBanana = false;
+  }
+}
 
 class Banana{
   constructor(x, y){
     this.x = x;
     this.y = y;
-    this.d = distance(playerX, playerY, 680, 120);
   }
 
   display(){
+    this.d = distance(playerX, playerY, 680, 120);
     image(tree, 680, 100, 230, 230);
     if(this.d < 50){
       image(banana, playerX, playerY - 50, 50, 40);
       print("banana");
+      holdingBanana = true;
     }
+    if(holdingBanana===true) image(banana, playerX, playerY - 50, 50, 40);
   }
 }
