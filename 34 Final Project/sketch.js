@@ -9,11 +9,12 @@ let playerX, playerY;
 let facingRight = true;
 let customerOneLeft, customerOneRight, myCustomer;
 let employeeLeft, employeeRight, myEmployee;
-let tree;
-let banana, myBanana;
-let stall;
-let holdingBanana = false;
-let stallD;
+let treeOne, treeTwo;
+let banana, myBananaTree, holdingBanana = false;
+let coconut, myCoconutTree, holdingCoconut = false;
+let bananaStall, bananaStallD;
+let coconutStall, coconutStallD;
+let score = 0;
 
 function preload(){
   // loading all of the images before the program starts
@@ -23,30 +24,34 @@ function preload(){
   customerOneRight = loadImage("assets/CustomerOneRight.png");
   employeeLeft = loadImage("assets/EmployeeLeft.png");
   employeeRight = loadImage("assets/EmployeeRight.png");
-  tree = loadImage("assets/BananaTree.png");
+  treeOne = loadImage("assets/BananaTree.png");
+  treeTwo = loadImage("assets/CoconutTree.png");
   banana = loadImage("assets/Banana.png");
-  stall = loadImage("assets/Stall.png");
+  bananaStall = loadImage("assets/BananaStall.png");
+  coconut = loadImage("assets/Coconut.png");
+  coconutStall = loadImage("assets/CoconutStall.png");
 }
 
 function setup() {
   createCanvas(800, 800);
   playerX = width/2;
   playerY = height/2;
-
   imageMode(CENTER);
 
   // creating objects
   myCustomer = new Customer(random(0, width), random(0, height));
   myEmployee = new Employee(random(0, width), random(0, height));
-  myBanana = new Banana(playerX, playerY - 50);
+  myBananaTree = new bananaTree(playerX, playerY - 50);
+  myCoconutTree = new coconutTree(playerX, playerY - 50);
 }
 
 function draw() {
   background(243, 238, 156);
-  Stall();
+  Stalls();
+  bananaTree();
+  coconutTree();
   myCustomer.update();
   myEmployee.update();
-  myBanana.display();
   drawPlayer(playerX, playerY);
 }
 
@@ -86,6 +91,40 @@ function distance(x1, y1, x2, y2){
   return c;
 }
 
+function Stalls(){
+  image(bananaStall, 120, 700, 230, 230);
+  bananaStallD = distance(playerX, playerY, 120, 700);
+  if(bananaStallD < 50){
+    holdingBanana = false;
+  }
+  image(coconutStall, 120, 100, 230, 230);
+  coconutStallD = distance(playerX, playerY, 120, 100);
+  if(coconutStallD < 50){
+    holdingCoconut = false;
+  }
+}
+
+function bananaTree(){
+  let d;
+  d = distance(playerX, playerY, 680, 120);
+  image(treeOne, 680, 100, 230, 230);
+  if(d < 50){
+    image(banana, playerX, playerY - 50, 50, 40);
+    holdingBanana = true;
+  }
+  if(holdingBanana===true) image(banana, playerX, playerY - 50, 50, 40);
+}
+
+function coconutTree(){
+  let d;
+  d = distance(playerX, playerY, 680, 690);
+  image(treeTwo, 680, 690, 230, 230);
+  if(d < 50){
+    image(coconut, playerX, playerY - 50, 50, 40);
+    holdingCoconut = true;
+  }
+  if(holdingCoconut===true) image(coconut, playerX, playerY - 50, 50, 40);
+}
 
 class Monkey{
   // creating a parent class with the random movement and picking up object mechanics
@@ -155,31 +194,5 @@ class Customer extends Monkey{
   update(){
     myCustomer.draw();
     myCustomer.move();
-  }
-}
-
-function Stall(){
-  image(stall, 120, 700, 230, 230);
-  stallD = distance(playerX, playerY, 120, 700);
-  if(stallD < 50){
-    holdingBanana = false;
-  }
-}
-
-class Banana{
-  constructor(x, y){
-    this.x = x;
-    this.y = y;
-  }
-
-  display(){
-    this.d = distance(playerX, playerY, 680, 120);
-    image(tree, 680, 100, 230, 230);
-    if(this.d < 50){
-      image(banana, playerX, playerY - 50, 50, 40);
-      print("banana");
-      holdingBanana = true;
-    }
-    if(holdingBanana===true) image(banana, playerX, playerY - 50, 50, 40);
   }
 }
