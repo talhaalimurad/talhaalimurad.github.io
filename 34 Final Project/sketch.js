@@ -87,7 +87,6 @@ function distance(x1, y1, x2, y2){
   let a = Math.abs(x1-x2);
   let b = Math.abs(y1-y2);
   let c = Math.sqrt(a*a + b*b);
-  print(c);
   return c;
 }
 
@@ -95,13 +94,21 @@ function Stalls(){
   image(bananaStall, 120, 700, 230, 230);
   bananaStallD = distance(playerX, playerY, 120, 700);
   if(bananaStallD < 50){
-    holdingBanana = false;
+    if(holdingBanana){
+      holdingBanana = false;
+      score+=20;
+      print(score);
+    }
   }
   image(coconutStall, 120, 100, 230, 230);
   coconutStallD = distance(playerX, playerY, 120, 100);
   if(coconutStallD < 50){
-    holdingCoconut = false;
+    if(holdingCoconut){
+      holdingCoconut = false;
+      score+=10;
+    }
   }
+  text("SCORE: " + score, width/2, 100);
 }
 
 function bananaTree(){
