@@ -14,6 +14,7 @@ let banana, myBananaTree, holdingBanana = false;
 let coconut, myCoconutTree, holdingCoconut = false;
 let bananaStall, bananaStallD;
 let coconutStall, coconutStallD;
+let upgradeButton, upgradeButtonTwo;
 let score = 0;
 
 function preload(){
@@ -30,6 +31,8 @@ function preload(){
   bananaStall = loadImage("assets/BananaStall.png");
   coconut = loadImage("assets/Coconut.png");
   coconutStall = loadImage("assets/CoconutStall.png");
+  upgradeButton = loadImage("assets/UpgradeButton.png");
+  upgradeButtonTwo = loadImage("assets/UpgradeButtonTwo.png");
 }
 
 function setup() {
@@ -50,6 +53,7 @@ function draw() {
   Stalls();
   bananaTree();
   coconutTree();
+  upgrade();
   myCustomer.update();
   myEmployee.update();
   drawPlayer(playerX, playerY);
@@ -108,7 +112,10 @@ function Stalls(){
       score+=10;
     }
   }
-  text("SCORE: " + score, width/2, 100);
+  textFont("calibri");
+  textSize(20);
+  fill(214, 207, 94);
+  text("MONEY: $" + score, width/2 - 40, 100);
 }
 
 function bananaTree(){
@@ -131,6 +138,15 @@ function coconutTree(){
     holdingCoconut = true;
   }
   if(holdingCoconut===true) image(coconut, playerX, playerY - 50, 50, 40);
+}
+
+function upgrade(){
+  let d;
+  image(upgradeButton, width/2, 700);
+  d = distance(mouseX, mouseY, width/2, 700);
+  if(d < 50){
+    image(upgradeButtonTwo, width/2, 700);
+  }
 }
 
 class Monkey{
