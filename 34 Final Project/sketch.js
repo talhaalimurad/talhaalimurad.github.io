@@ -14,8 +14,11 @@ let banana, myBananaTree, holdingBanana = false;
 let coconut, myCoconutTree, holdingCoconut = false;
 let bananaStall, bananaStallD;
 let coconutStall, coconutStallD;
-let upgradeButton, upgradeButtonTwo;
+let employeeUpgradeButton, employeeUpgradeButtonTwo;
+let customerUpgradeButton, customerUpgradeButtonTwo;
 let score = 0;
+let customers = [];
+let employees = [];
 
 function preload(){
   // loading all of the images before the program starts
@@ -31,8 +34,10 @@ function preload(){
   bananaStall = loadImage("assets/BananaStall.png");
   coconut = loadImage("assets/Coconut.png");
   coconutStall = loadImage("assets/CoconutStall.png");
-  upgradeButton = loadImage("assets/UpgradeButton.png");
-  upgradeButtonTwo = loadImage("assets/UpgradeButtonTwo.png");
+  employeeUpgradeButton = loadImage("assets/UpgradeButton.png");
+  employeeUpgradeButtonTwo = loadImage("assets/UpgradeButtonTwo.png");
+  customerUpgradeButton = loadImage("assets/UpgradeButtonC.png");
+  customerUpgradeButtonTwo = loadImage("assets/UpgradeButtonCTwo.png");
 }
 
 function setup() {
@@ -42,8 +47,6 @@ function setup() {
   imageMode(CENTER);
 
   // creating objects
-  myCustomer = new Customer(random(0, width), random(0, height));
-  myEmployee = new Employee(random(0, width), random(0, height));
   myBananaTree = new bananaTree(playerX, playerY - 50);
   myCoconutTree = new coconutTree(playerX, playerY - 50);
 }
@@ -54,8 +57,9 @@ function draw() {
   bananaTree();
   coconutTree();
   upgrade();
-  myCustomer.update();
-  myEmployee.update();
+  print(customers);
+  for(let employee of employees) employee.update();
+  for(let customer of customers) customer.update();
   drawPlayer(playerX, playerY);
 }
 
@@ -142,10 +146,22 @@ function coconutTree(){
 
 function upgrade(){
   let d;
-  image(upgradeButton, width/2, 700);
-  d = distance(mouseX, mouseY, width/2, 700);
+  image(employeeUpgradeButton, width/2 - 50, 700);
+  d = distance(mouseX, mouseY, width/2 - 50, 700);
   if(d < 50){
-    image(upgradeButtonTwo, width/2, 700);
+    image(employeeUpgradeButtonTwo, width/2 - 50, 700);
+    if(mouseIsPressed){
+      employees.push(new Employee(random(0, width), random(0, height)));
+    }
+  }
+
+  image(customerUpgradeButton, width/2 + 50, 700);
+  d = distance(mouseX, mouseY, width/2 + 50, 700);
+  if(d < 50){
+    image(customerUpgradeButtonTwo, width/2 + 50, 700);
+    if(mouseIsPressed){
+      customers.push(new Customer(random(0, width), random(0, height)));
+    }
   }
 }
 
@@ -199,8 +215,8 @@ class Employee extends Monkey{
   }
 
   update(){
-    myEmployee.draw();
-    myEmployee.move();
+    this.draw();
+    this.move();
   }
 }
 
