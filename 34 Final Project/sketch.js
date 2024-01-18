@@ -231,7 +231,7 @@ class Customer extends Monkey{
   }
 
   update(){
-    myCustomer.draw();
-    myCustomer.move();
+    this.draw();
+    this.move();
   }
 }
