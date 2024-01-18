@@ -201,6 +201,11 @@ class Monkey{
 
   pickUp(){
   }
+
+  update(){
+    this.draw();
+    this.move();
+  }
 }
 
 class Employee extends Monkey{
@@ -213,11 +218,6 @@ class Employee extends Monkey{
     if(this.facingRight===true) image(employeeRight, this.x, this.y, 55, 60);
     else image(employeeLeft, this.x, this.y, 55, 60);
   }
-
-  update(){
-    this.draw();
-    this.move();
-  }
 }
 
 class Customer extends Monkey{
@@ -228,10 +228,5 @@ class Customer extends Monkey{
   draw(){
     if(this.facingRight===true) image(customerOneRight, this.x, this.y, 55, 60);
     else image(customerOneLeft, this.x, this.y, 55, 60);
-  }
-
-  update(){
-    this.draw();
-    this.move();
   }
 }
