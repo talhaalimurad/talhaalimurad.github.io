@@ -17,8 +17,7 @@ let coconutStall, coconutStallD;
 let employeeUpgradeButton, employeeUpgradeButtonTwo;
 let customerUpgradeButton, customerUpgradeButtonTwo;
 let score = 0;
-let customers = [];
-let employees = [];
+let customers = [], employees = [];
 
 function preload(){
   // loading all of the images before the program starts
@@ -144,24 +143,32 @@ function coconutTree(){
   if(holdingCoconut===true) image(coconut, playerX, playerY - 50, 50, 40);
 }
 
+function mouseClicked(){
+  let d = distance(mouseX, mouseY, width/2 + 50, 700);
+  if(d < 50 && score >= 50){
+    customers.push(new Customer(random(0, width), random(0, height)));
+    score-=50;
+  }
+
+  let d2 = distance(mouseX, mouseY, width/2 - 50, 700);
+  if(d2 < 50 && score >= 50){
+    employees.push(new Employee(random(0, width), random(0, height)));
+    score -= 50;
+  }
+}
+
 function upgrade(){
   let d;
   image(employeeUpgradeButton, width/2 - 50, 700);
   d = distance(mouseX, mouseY, width/2 - 50, 700);
   if(d < 50){
     image(employeeUpgradeButtonTwo, width/2 - 50, 700);
-    if(mouseIsPressed){
-      employees.push(new Employee(random(0, width), random(0, height)));
-    }
   }
 
   image(customerUpgradeButton, width/2 + 50, 700);
   d = distance(mouseX, mouseY, width/2 + 50, 700);
   if(d < 50){
     image(customerUpgradeButtonTwo, width/2 + 50, 700);
-    if(mouseIsPressed){
-      customers.push(new Customer(random(0, width), random(0, height)));
-    }
   }
 }
 
@@ -197,9 +204,6 @@ class Monkey{
     }
     else if(this.x >= width) this.x -= width;
     else this.x += width;
-  }
-
-  pickUp(){
   }
 
   update(){
